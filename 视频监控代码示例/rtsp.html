@@ -1,0 +1,21 @@
+<html>
+<head>
+<script src="adapter.min.js" ></script>
+<script src="webrtcstreamer.js" ></script>
+<script>   
+    var webRtcServer      = null;
+
+    window.onload  = function() { 
+        // webRtcServer = new WebRtcStreamer("video","http://XXX.vaiwan.com/camera");   
+        webRtcServer = new WebRtcStreamer("video","http://192.168.1.127:8000"); 
+        webRtcServer.connect("rtsp://admin:lambda1357@192.168.1.111/11");
+    }
+
+    window.onbeforeunload = function() { webRtcServer.disconnect(); }
+
+</script>
+</head>
+<body> 
+    <video id="video"></video>
+</body>
+</html>

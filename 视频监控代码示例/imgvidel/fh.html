@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('视频展示rtsp')"/>
+</head>
+<body class="gray-bg">
+<div id="divf" style="padding: 20px">
+    <p style="font-size: 20px;color: #0a7491;font-weight: bold;font-family: 楷体">rtsp拉取视频显示</p>
+    <img id="show_video" src="">
+    <!-- <img id="show_video1" src="">
+    <img id="show_video2" src="">
+    <img id="show_video3" src="">
+    <img id="show_video4" src="">
+    <img id="show_video5" src=""> -->
+</div>
+<th:block th:include="include :: footer"/>
+<script src="./jquery-3.0.0.min.js"></script>
+<script src="../static/js/workbench/WebSocket.js" th:src="@{/js/workbench/WebSocket.js}"></script>
+<script th:inline="javascript">
+    var wsUrl = "ws://localhost:1234/webSocketv/mavv/22";
+    var flag = 0
+
+    var socket;
+        if(!window.WebSocket){
+            window.WebSocket = window.MozWebSocket;
+        }
+        if(window.WebSocket){
+             socket = new WebSocket("ws:guoshaa.vaiwan.com/websocket/mav?rtspUrl=rtsp://admin:lambda1357@192.168.1.14:554/12");
+             socket.onopen = function(event){
+                // var ta = document.getElementById('responseText');
+                console.log("已连接");
+             }
+         }else{
+             alert("您的浏览器不支持WebSocket协议！");
+         }
+
+         socket.onclose = function() {
+             console.log("断开连接")
+         }
+
+         socket.onmessage = function (e) {
+            var a = JSON.parse(e.data)
+            document.getElementById("show_video").src="data:image/*;base64," + a.data
+            // document.getElementById("show_video1").src="data:image/*;base64," + a.data
+            // document.getElementById("show_video2").src="data:image/*;base64," + a.data
+            // document.getElementById("show_video3").src="data:image/*;base64," + a.data
+            // document.getElementById("show_video4").src="data:image/*;base64," + a.data
+            // document.getElementById("show_video5").src="data:image/*;base64," + a.data
+            // $("#show_video").attr("src", "data:image/*;base64," + e.data)
+            
+            // $("#divf").find("img").each(function () {
+            //     $(this).attr("src", "");
+            //     $(this).remove;
+            // });
+
+         }
+</script>
+</body>
+</html>
